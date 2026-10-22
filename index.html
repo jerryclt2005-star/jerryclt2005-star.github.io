@@ -1,0 +1,807 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="陈乐天的个人主页：跨学科研究、数据分析与项目协作。">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%2310243d'/%3E%3Ctext x='32' y='39' text-anchor='middle' font-family='Georgia' font-size='22' font-weight='700' fill='white'%3ELC%3C/text%3E%3C/svg%3E">
+  <title>陈乐天 · Letian Chen</title>
+  <style>
+    :root {
+      --ink: #10243d;
+      --muted: #607087;
+      --paper: #f5f1e9;
+      --surface: #fffdf8;
+      --blue: #155da8;
+      --blue-soft: #dbeafa;
+      --coral: #e85d4a;
+      --line: rgba(16, 36, 61, .14);
+      --shadow: 0 24px 80px rgba(16, 36, 61, .12);
+      --radius: 28px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 8% 3%, rgba(232, 93, 74, .08), transparent 28rem),
+        radial-gradient(circle at 90% 18%, rgba(21, 93, 168, .10), transparent 32rem),
+        var(--paper);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .16;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.22'/%3E%3C/svg%3E");
+      z-index: 20;
+    }
+
+    a { color: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+
+    .progress {
+      position: fixed;
+      inset: 0 auto auto 0;
+      height: 3px;
+      width: 0;
+      background: linear-gradient(90deg, var(--coral), var(--blue));
+      z-index: 100;
+    }
+
+    .shell { width: min(1180px, calc(100% - 40px)); margin-inline: auto; }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 90;
+      backdrop-filter: blur(18px);
+      background: color-mix(in srgb, var(--paper) 84%, transparent);
+      border-bottom: 1px solid transparent;
+      transition: border-color .25s ease;
+    }
+
+    .site-header.scrolled { border-color: var(--line); }
+
+    .nav {
+      height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 22px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      text-decoration: none;
+      font-weight: 800;
+      letter-spacing: -.03em;
+    }
+
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 38px;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      color: white;
+      background: var(--ink);
+      font-family: Georgia, serif;
+      font-size: 14px;
+      letter-spacing: -.08em;
+    }
+
+    .nav-links { display: flex; align-items: center; gap: 28px; }
+    .nav-links a {
+      position: relative;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 650;
+      text-decoration: none;
+    }
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 100%;
+      bottom: -7px;
+      height: 2px;
+      background: var(--coral);
+      transition: right .25s ease;
+    }
+    .nav-links a:hover::after, .nav-links a.active::after { right: 0; }
+    .nav-links a.active { color: var(--ink); }
+
+    .lang-toggle {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 8px 12px;
+      color: var(--ink);
+      background: rgba(255,255,255,.38);
+      font: inherit;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .menu-toggle { display: none; border: 0; background: none; padding: 8px; color: var(--ink); }
+
+    main { overflow: clip; }
+
+    .hero {
+      min-height: calc(100svh - 76px);
+      display: grid;
+      grid-template-columns: 1.3fr .7fr;
+      align-items: center;
+      gap: clamp(34px, 6vw, 78px);
+      padding-block: 74px 92px;
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 0 0 20px;
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 850;
+      letter-spacing: .19em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before { content: ""; width: 38px; height: 2px; background: var(--coral); }
+
+    h1, h2, h3, p { margin-top: 0; }
+
+    h1 {
+      margin-bottom: 24px;
+      max-width: 760px;
+      font-family: Georgia, "Songti SC", "STSong", serif;
+      font-size: clamp(52px, 7.4vw, 104px);
+      line-height: .96;
+      letter-spacing: -.055em;
+      font-weight: 700;
+    }
+
+    h1 .accent { color: var(--blue); }
+    h1 .name-line {
+      display: block;
+      margin-top: 18px;
+      color: var(--muted);
+      font-family: Inter, ui-sans-serif, sans-serif;
+      font-size: .19em;
+      line-height: 1.2;
+      letter-spacing: .26em;
+      text-transform: uppercase;
+    }
+
+    .hero-copy {
+      max-width: 640px;
+      color: var(--muted);
+      font-size: clamp(17px, 1.6vw, 20px);
+    }
+
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 50px;
+      padding: 0 22px;
+      border: 1px solid var(--ink);
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 800;
+      text-decoration: none;
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+    .button:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(16,36,61,.13); }
+    .button.primary { color: white; background: var(--ink); }
+    .button.ghost { background: rgba(255,255,255,.36); }
+    .button svg { width: 17px; margin-left: 10px; }
+
+    .hero-visual { position: relative; min-height: 500px; display: grid; place-items: center; }
+    .profile-dossier {
+      position: relative;
+      width: min(390px, 100%);
+      min-height: 430px;
+      padding: 34px;
+      border: 1px solid rgba(16,36,61,.12);
+      border-radius: 32px;
+      background: rgba(255,253,248,.78);
+      box-shadow: 0 24px 70px rgba(16,36,61,.10);
+      backdrop-filter: blur(14px);
+      overflow: hidden;
+    }
+    .profile-dossier::before {
+      content: "PROFILE / 个人档案";
+      display: block;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--line);
+      color: var(--coral);
+      font: 800 10px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
+      letter-spacing: .16em;
+    }
+    .portrait-frame {
+      position: relative;
+      z-index: 2;
+      width: 136px;
+      aspect-ratio: 1;
+      margin: 24px 0 22px;
+      border-radius: 50%;
+      overflow: hidden;
+      background: #d9d7d2;
+      box-shadow: 0 12px 32px rgba(16,36,61,.16);
+    }
+    .portrait-frame img { width: 100%; height: 100%; display: block; object-fit: cover; object-position: center 20%; filter: saturate(.78) contrast(1.02); }
+    .portrait-frame::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.4);
+      border-radius: inherit;
+    }
+
+    .orbit {
+      position: absolute;
+      right: -58px;
+      top: 54px;
+      width: 270px;
+      aspect-ratio: 1;
+      border: 1px solid rgba(21,93,168,.25);
+      border-radius: 50%;
+      animation: spin 26s linear infinite;
+    }
+    .orbit::before {
+      content: "";
+      position: absolute;
+      top: 12%;
+      left: 10%;
+      width: 12px;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: var(--coral);
+      box-shadow: 0 0 0 9px var(--paper);
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .note-card {
+      position: absolute;
+      z-index: 4;
+      right: -12px;
+      top: 134px;
+      padding: 13px 15px;
+      border: 1px solid rgba(255,255,255,.76);
+      border-radius: 18px;
+      background: rgba(255,253,248,.88);
+      box-shadow: 0 18px 42px rgba(16,36,61,.12);
+      backdrop-filter: blur(12px);
+      transform: rotate(3deg);
+    }
+    .note-card strong { display: block; font-family: Georgia, serif; font-size: 18px; line-height: 1.1; }
+    .note-card span { color: var(--muted); font-size: 12px; }
+
+    .coordinates {
+      position: absolute;
+      right: 18px;
+      bottom: 22px;
+      color: var(--muted);
+      font: 650 10px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
+      letter-spacing: .08em;
+    }
+    .profile-name { margin-bottom: 2px; font-family: Georgia, "Songti SC", serif; font-size: 29px; line-height: 1.1; }
+    .profile-subtitle { margin: 0 0 22px; color: var(--muted); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
+    .profile-facts { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 20px; margin: 0; }
+    .profile-facts div { min-width: 0; }
+    .profile-facts dt { margin-bottom: 2px; color: var(--muted); font-size: 10px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+    .profile-facts dd { margin: 0; font-size: 13px; font-weight: 750; }
+    .profile-contact { display: flex; gap: 10px; margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--line); }
+    .profile-contact a { color: var(--blue); font-size: 12px; font-weight: 800; text-decoration: none; }
+
+    .company-lockup { display: flex; align-items: center; gap: 13px; margin-bottom: 10px; }
+    .company-logo { flex: 0 0 48px; width: 48px; height: 48px; display: grid; place-items: center; border-radius: 15px; color: var(--ink); background: var(--surface); border: 1px solid var(--line); }
+    .company-logo svg { width: 29px; height: 29px; }
+    .company-logo.shell { color: #d9483b; background: #fff1bf; }
+    .company-logo.jll { color: #c7192d; background: #fff; }
+    .company-logo.bcg { color: #17785f; background: #e7f3ed; }
+    .company-lockup .experience-company { margin: 0; }
+
+    .project-visual {
+      position: relative;
+      height: 108px;
+      margin: 0 0 26px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      color: var(--blue);
+      background: linear-gradient(145deg, rgba(21,93,168,.10), rgba(232,93,74,.08));
+      overflow: hidden;
+    }
+    .project-visual svg { width: 82%; height: 82%; }
+    .project-visual .line { stroke: currentColor; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    .project-visual .accent-fill { fill: var(--coral); opacity: .9; }
+    .project-visual .blue-fill { fill: var(--blue); opacity: .13; }
+    }
+
+    .metric-band { border-block: 1px solid var(--line); background: rgba(255,255,255,.25); }
+    .metrics { display: grid; grid-template-columns: repeat(4, 1fr); }
+    .metric { padding: 30px clamp(18px, 3vw, 42px); border-right: 1px solid var(--line); }
+    .metric:first-child { padding-left: 0; }
+    .metric:last-child { border-right: 0; }
+    .metric strong { display: block; font-family: Georgia, serif; font-size: clamp(30px, 4vw, 52px); line-height: 1; color: var(--blue); }
+    .metric span { display: block; margin-top: 9px; color: var(--muted); font-size: 13px; }
+
+    section { scroll-margin-top: 90px; }
+    .section { padding-block: clamp(92px, 12vw, 154px); }
+    .section-head {
+      display: grid;
+      grid-template-columns: 190px 1fr;
+      gap: 34px;
+      margin-bottom: 54px;
+      align-items: start;
+    }
+    .section-index { color: var(--coral); font: 800 12px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .12em; text-transform: uppercase; }
+    .section-title { margin: 0; max-width: 820px; font-family: Georgia, "Songti SC", serif; font-size: clamp(38px, 5.2vw, 70px); line-height: 1.08; letter-spacing: -.04em; }
+    .section-title em { color: var(--blue); font-weight: inherit; }
+
+    .about-grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: 30px; }
+    .about-lead {
+      padding: clamp(30px, 5vw, 58px);
+      border-radius: var(--radius);
+      color: white;
+      background: var(--ink);
+      min-height: 420px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .about-lead p { max-width: 650px; font-family: Georgia, "Songti SC", serif; font-size: clamp(25px, 3vw, 38px); line-height: 1.42; letter-spacing: -.02em; }
+    .about-lead .signature { color: #aebed0; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; }
+    .about-side { display: grid; gap: 18px; }
+    .info-card { padding: 30px; border: 1px solid var(--line); border-radius: var(--radius); background: rgba(255,253,248,.62); }
+    .info-card h3 { margin-bottom: 10px; font-size: 14px; letter-spacing: .08em; text-transform: uppercase; }
+    .info-card p { margin: 0; color: var(--muted); }
+    .tag-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+    .tag { padding: 7px 11px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); background: rgba(255,255,255,.42); font-size: 12px; font-weight: 700; }
+
+    .experience-list { border-top: 1px solid var(--line); }
+    .experience-item {
+      display: grid;
+      grid-template-columns: 190px minmax(230px, .75fr) 1.35fr;
+      gap: 34px;
+      padding-block: 42px;
+      border-bottom: 1px solid var(--line);
+      transition: padding-left .25s ease, background .25s ease;
+    }
+    .experience-item:hover { padding-left: 16px; background: rgba(255,255,255,.3); }
+    .experience-time { color: var(--muted); font: 650 12px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; }
+    .experience-company { margin-bottom: 4px; font-family: Georgia, serif; font-size: 32px; line-height: 1.1; }
+    .experience-role { color: var(--blue); font-size: 13px; font-weight: 800; }
+    .experience-copy { color: var(--muted); }
+    .experience-copy p { margin-bottom: 13px; }
+    .experience-copy strong { color: var(--ink); }
+    .micro-stats { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+    .micro-stats span { padding: 6px 9px; border-radius: 8px; background: var(--blue-soft); color: #0b4b88; font-size: 11px; font-weight: 800; }
+
+    .project-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .project-card {
+      position: relative;
+      min-height: 390px;
+      padding: 30px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      overflow: hidden;
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+    .project-card:hover { transform: translateY(-6px); box-shadow: 0 20px 60px rgba(16,36,61,.11); }
+    .project-card::before {
+      content: attr(data-number);
+      position: absolute;
+      right: -8px;
+      bottom: -42px;
+      color: rgba(21,93,168,.07);
+      font-family: Georgia, serif;
+      font-size: 180px;
+      line-height: 1;
+    }
+    .project-meta { display: flex; justify-content: space-between; gap: 18px; margin-bottom: 18px; color: var(--muted); font-size: 11px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+    .project-card h3 { position: relative; max-width: 280px; font-family: Georgia, "Songti SC", serif; font-size: 25px; line-height: 1.25; }
+    .project-card p { position: relative; color: var(--muted); font-size: 14px; }
+
+    .skills-wrap { display: grid; grid-template-columns: 1.05fr .95fr; gap: 20px; }
+    .capabilities { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .capability { padding: 26px; border-radius: 22px; background: var(--surface); border: 1px solid var(--line); }
+    .capability:first-child { grid-column: span 2; background: var(--blue); color: white; }
+    .capability .icon { font-family: Georgia, serif; font-size: 28px; }
+    .capability h3 { margin: 35px 0 8px; font-size: 17px; }
+    .capability p { margin: 0; color: inherit; opacity: .72; font-size: 13px; }
+    .award-panel { padding: 34px; border-radius: var(--radius); background: #efe5d7; }
+    .award-panel h3 { margin-bottom: 26px; font-family: Georgia, "Songti SC", serif; font-size: 28px; }
+    .award-list { list-style: none; margin: 0; padding: 0; }
+    .award-list li { display: grid; grid-template-columns: 46px 1fr; gap: 14px; padding: 17px 0; border-top: 1px solid rgba(16,36,61,.13); }
+    .award-year { color: var(--coral); font: 800 11px/1.5 ui-monospace, monospace; }
+    .award-name { font-size: 14px; font-weight: 720; }
+
+    .contact {
+      position: relative;
+      margin-bottom: 30px;
+      padding: clamp(38px, 7vw, 84px);
+      border-radius: 34px;
+      color: white;
+      background: var(--ink);
+      overflow: hidden;
+    }
+    .contact::after {
+      content: "LET'S TALK";
+      position: absolute;
+      right: -32px;
+      bottom: -52px;
+      color: rgba(255,255,255,.04);
+      font: 800 clamp(80px, 15vw, 190px)/1 Inter, sans-serif;
+      white-space: nowrap;
+    }
+    .contact .eyebrow { color: #9dc7ef; }
+    .contact h2 { position: relative; z-index: 2; max-width: 800px; margin-bottom: 35px; font-family: Georgia, "Songti SC", serif; font-size: clamp(40px, 6vw, 78px); line-height: 1.08; letter-spacing: -.04em; }
+    .contact-links { position: relative; z-index: 2; display: flex; flex-wrap: wrap; gap: 12px; }
+    .contact .button { border-color: rgba(255,255,255,.35); color: white; }
+    .contact .button.primary { color: var(--ink); background: white; border-color: white; }
+
+    footer { padding: 25px 0 38px; color: var(--muted); font-size: 12px; }
+    .footer-inner { display: flex; justify-content: space-between; gap: 22px; border-top: 1px solid var(--line); padding-top: 24px; }
+
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .75s ease, transform .75s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    :focus-visible { outline: 3px solid rgba(232,93,74,.45); outline-offset: 4px; }
+
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; padding-top: 54px; }
+      .hero-visual { min-height: 470px; }
+      .profile-dossier { width: min(520px, 100%); }
+      .section-head { grid-template-columns: 1fr; gap: 14px; }
+      .about-grid, .skills-wrap { grid-template-columns: 1fr; }
+      .experience-item { grid-template-columns: 130px 1fr; }
+      .experience-copy { grid-column: 2; }
+      .project-grid { grid-template-columns: 1fr 1fr; }
+      .project-card:last-child { grid-column: span 2; }
+    }
+
+    @media (max-width: 680px) {
+      .shell { width: min(100% - 28px, 1180px); }
+      .nav { height: 68px; }
+      .menu-toggle { display: block; }
+      .nav-links {
+        position: absolute;
+        inset: 68px 14px auto;
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+        padding: 20px;
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        background: var(--surface);
+        box-shadow: var(--shadow);
+      }
+      .nav-links.open { display: flex; }
+      .lang-toggle { position: absolute; right: 62px; }
+      .hero { min-height: auto; padding-block: 52px 72px; }
+      h1 { font-size: clamp(48px, 15vw, 72px); }
+      .hero-visual { min-height: 460px; }
+      .profile-dossier { min-height: 420px; padding: 26px; }
+      .portrait-frame { width: 116px; }
+      .orbit { right: -44px; top: 60px; width: 230px; }
+      .note-card { right: -2px; top: 126px; }
+      .coordinates { right: 24px; bottom: 18px; }
+      .profile-facts { gap: 12px 14px; }
+      .metrics { grid-template-columns: 1fr 1fr; }
+      .metric { border-bottom: 1px solid var(--line); }
+      .metric:nth-child(2) { border-right: 0; }
+      .metric:nth-last-child(-n+2) { border-bottom: 0; }
+      .metric:first-child { padding-left: 18px; }
+      .section { padding-block: 82px; }
+      .about-lead { min-height: 360px; }
+      .experience-item { grid-template-columns: 1fr; gap: 10px; }
+      .experience-copy { grid-column: auto; margin-top: 10px; }
+      .experience-company { font-size: 27px; }
+      .project-grid { grid-template-columns: 1fr; }
+      .project-card:last-child { grid-column: auto; }
+      .capabilities { grid-template-columns: 1fr; }
+      .capability:first-child { grid-column: auto; }
+      .footer-inner { flex-direction: column; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <!--
+    内容维护映射（便于后续从 Excel 更新）：
+    profile -> #home / #about；experience -> #experience；research -> #research；
+    leadership 与 award -> #capabilities；联系方式 -> #contact。
+    当前个人信息按作业要求直接写入本 HTML，不依赖外部数据源。
+  -->
+  <div class="progress" aria-hidden="true"></div>
+  <header class="site-header">
+    <nav class="nav shell" aria-label="主导航">
+      <a class="brand" href="#home" aria-label="返回首页">
+        <span class="brand-mark">LC</span>
+        <span>Letian Chen</span>
+      </a>
+      <div class="nav-links" id="navLinks">
+        <a href="#about" data-zh="关于" data-en="About">关于</a>
+        <a href="#experience" data-zh="经历" data-en="Experience">经历</a>
+        <a href="#research" data-zh="研究" data-en="Research">研究</a>
+        <a href="#capabilities" data-zh="能力" data-en="Capabilities">能力</a>
+        <a href="#contact" data-zh="联系" data-en="Contact">联系</a>
+      </div>
+      <button class="lang-toggle" type="button" aria-label="切换中英文" id="langToggle">EN</button>
+      <button class="menu-toggle" type="button" aria-label="展开导航" aria-expanded="false" aria-controls="navLinks" id="menuToggle">
+        <svg width="25" height="25" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero shell" id="home">
+      <div class="hero-content reveal">
+        <p class="eyebrow" data-zh="你好，很高兴认识你" data-en="Hello, nice to meet you">你好，很高兴认识你</p>
+        <h1>
+          <span data-zh="我是" data-en="I'm">我是</span><br>
+          <span class="accent" data-zh="陈乐天。" data-en="Letian Chen.">陈乐天。</span>
+          <span class="name-line" data-zh="研究 · 数据 · 跨文化沟通" data-en="Research · Data · Cross-cultural Communication">研究 · 数据 · 跨文化沟通</span>
+        </h1>
+        <p class="hero-copy" data-zh="我今年 21 岁，就读于上海交通大学英语专业（比较文学与跨文化方向），辅修行政管理，预计 2027 年 6 月毕业。我的经历横跨咨询、商业地产、能源渠道与社会科学研究，希望用结构化分析理解复杂问题，也用清晰表达让洞察真正落地。" data-en="I am 21 and studying English (Comparative Literature and Cross-Cultural Studies) at Shanghai Jiao Tong University, with a minor in Public Administration and expected graduation in June 2027. My experience spans consulting, commercial real estate, energy channels and social-science research.">我今年 21 岁，就读于上海交通大学英语专业（比较文学与跨文化方向），辅修行政管理，预计 2027 年 6 月毕业。我的经历横跨咨询、商业地产、能源渠道与社会科学研究，希望用结构化分析理解复杂问题，也用清晰表达让洞察真正落地。</p>
+        <div class="hero-actions">
+          <a class="button primary" href="#experience"><span data-zh="查看我的经历" data-en="Explore my work">查看我的经历</span><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="button ghost" href="mailto:letianchen@sjtu.edu.cn" data-zh="邮件联系" data-en="Email me">邮件联系</a>
+        </div>
+      </div>
+      <div class="hero-visual reveal">
+        <div class="profile-dossier">
+          <div class="orbit" aria-hidden="true"></div>
+        <figure class="portrait-frame">
+          <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAASABIAAD/4QBMRXhpZgAATU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAtaADAAQAAAABAAABDwAAAAD/7QA4UGhvdG9zaG9wIDMuMAA4QklNBAQAAAAAAAA4QklNBCUAAAAAABDUHYzZjwCyBOmACZjs+EJ+/8AAEQgBDwC1AwEiAAIRAQMRAf/EAB8AAAEFAQEBAQEBAAAAAAAAAAABAgMEBQYHCAkKC//EALUQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+v/EAB8BAAMBAQEBAQEBAQEAAAAAAAABAgMEBQYHCAkKC//EALURAAIBAgQEAwQHBQQEAAECdwABAgMRBAUhMQYSQVEHYXETIjKBCBRCkaGxwQkjM1LwFWJy0QoWJDThJfEXGBkaJicoKSo1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoKDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uLj5OXm5+jp6vLz9PX29/j5+v/bAEMAAgICAgICAwICAwQDAwMEBgQEBAQGBwYGBgYGBwkHBwcHBwcJCQkJCQkJCQoKCgoKCgwMDAwMDg4ODg4ODg4ODv/bAEMBAgICAwMDBgMDBg4KCAoODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODv/dAAQADP/aAAwDAQACEQMRAD8A+79gWnIpAJ/WnMNxz/n+lKOBjPU1y8rOgNuMHrTlXmn8YyOtJRyoBHXdgelGfzFHJyDTs8c9aoBo4FBGaULz3pwXNADQOwpQuRUgXFP2Fck/T/69FwIdvrTMAdRmrOzpz160gGOooAgxilwMc/hTmGT6Uc9NtAEJz0B6U4ccGpACfl6UGMEc0AR8EH2pN3y7aNv+f8mjaaAImX0oVRgDPtUpXj/P+NIRip5dQIz8uRTcDOe+OKewpNuRxx9KloCJlJOW6mk2ip9p7mjbU8rA/9D74pMA4PepTgH8P8+tKB9R6VznQRAeh/TpT1jY4OfrQR74qZQQMH64oAaUAA96PL+lOIJPTpViNeDUt2QFTZjoKcsZyOat+UKcqhc0uZtaIBoiXFO28DAzxzXL+KfGmheEtPkvtRu4VZAT5RdQx2jkAdc49q+KfFX7bumadfNb6Rp3mAKSRI2G9QRgnn9OmcUcrauB9+lUzjABI9aPJBPqa/N1f22Ib4ARQIE3fO+4K/QgqVIwrY6EErkDPXj0vwT+1VZ6pK0eoPEIVlKLPJlWcAAEFQTtYEjJ5BzkdxQovqB9qNDxxiovKKkcV4D4a/aL8F6+Sktx5UsbMpibBb/WFVORwBgdCck8171aapYX8Pn2codCcZyOeBwCMjPPbNOV1qgHFeeaCBipmGPmBzmmAZ69Kd9LgV9g7HNGOwqcoeSOlMIwPemn1QEJXBpMYHT8akJB6daYVySaAIj0ORTCv939KnwRmmkEDNJq4EHNHPvT6Klgf//R+/evXtTgT1xUhUYpAvWuc6Bm3dz0p45/OkyRxVmNRtLYzyaTdlcBqrnPrUi/Lx/9b/GnL06YpcZrK19QGPLFBG087iOOMEszHgADJJJ6AV8GfHX9rqx0Np/D3gJzNOjGK4uivyr1HyDGSfcEfj1rM/ax/aB/s2KfwB4ZuiHIMd40JOTxyhcHAC/xAZPODivy01jUJPKeeVy7yZHozjsoPbPc9QBitqcXbUDofF3xK8UeLL1ptV1CScSnCgnliTzjGcehODwCM5rzfU9Sgjikczjco/eEZPXgAE5OPfp+FV/OkMZlYhZZs7DjiNOmQOpJ/l1xkVgzCznkMLI05TnG7aGOP4iOg7Ak5wOgzmt+VCbM8azMd0lrMRCo+YLnOegA4wTyOmcE1r6b4516yYJvZJU5Q7ieWyAc98DrgdetZYQRb1kCKRyscf3Fz0OTnOc5/WtGKxRfJPD/AD7pWYcjv3PQdR7fXlOKJ5tNTqdM8Za7EYzbu8PkMGmfcdynBIIIIxgkEe+MnpX3B8EPj7qXh2+i/tPVzc20roI0mDM7Y++Q+4lVOcjqM8kEcV+e97dACCWAYCkrIwAzIFAwST2JIz3/ACrUiuCba2mtjhozsj6/Lk5BH1Axyfzp+zT2Ep9z+kfwT8RvC/jq2WTQ72KeURh3iVlLID13BS2MH1rv2Q7frX89XgH4m6x4QvrTWtHlkieEh3aJ2ilKqQHUFTg8/eUgg9eRX7QfAv426J8WtCADiHVbZR9ohJ+Y9twBOcHjPUc8HtWE6aTuWme4HIzx2qJlOOBk5q48Zz0xUD8Dis12QyqRjtgmnBdx9KkKbgT3FI2Vbjkirv0AZs9qifr61IxNRkAnmmAyjApxAFJxQB//0v0EwT0GaBk9qenYdhUgQcMa5JSaZ0EQjzzUyYKgU/aKAoHTiobb3AfjpivH/jr8SLf4Y+AL3Wy6C7lXyLVWJGXYE5wCCcAE4B+pAr2NOnNfkT+3X8SLzV/F48I2JZLfSINrDI2u8hBZiOyqMDB5OM+lbJdgPi7xV4gv/Eeoz6veSmSe7mYlj8qqozwAOBkgnj/69cndyLcOXkX/AEeJACPqcKgx0JA3EdgQO9WIrhZIVYLuwSiqe/IAJx0JOCR2yM4rK1LIaPT0OIZLnBcdOMg8+5wfYEdhiuqMbKxLetzmNQvJ7lfKhZUadiFbOSV/iJ6YVQDnHf6YqvbKYlENuNkQ6nb8zjqMnr8xGcdh16VrzWyNdNtAAK7FwvATjA68AtzjuAB3NTpZTYMgUlj8q54459O54JI6ZwKTREbt3SMa2tojvmfkI/CcFnYZJyc9B2HbgU+KWS4iuB0KKzAL0BbjkjrgAdK3Y9Au5MpBEd7ADIB45JwBjv1P156UDQb6zk2qOCwHGcEAc5J7sep9OlZ+0j3NfYyaOSSaVIgkSkxxSIWU44B4zkgdScYJ6YrprYvGgHVJcFeB2wAce+R+VPi8PTmOWAocbyXyORjgD8Mgj3FSRWksNq8UigNG25WyTgKR/h0rSMovRGTpyNOwnRpmmztSUebH/vjIOBnuMDGec9sV7F8MviBrHgPxBaeINLnkjEEgEiIxGA2OCQcYIHIIIPcHpXiHkMqwxMMRoTkL/DuHGPqCAPerUdxLGolU5QgCU5yC3BGM+xGc9RmqauPY/o5+Gvj7TfiN4Ts/Eemsp8yMCVAQSjY5BIPPscDvkAgiu5YbxgEDvzX5r/sHfEZL06h4Mvm2SSRCe2X1KffUj1AOcjrznJ5P6VkY7VxTTvY1duhAsePekZCOce9SnimknoTwayuxEOCcnFNK+lThCpzmoXzv9K0jK7sBWZTn/P8AjSbT/n/9dSEjvSZWrA//0/0JVSDnNSDkH0FGc9sUq1wbnQOUenSlGQfegHFP74rSMUBk63qS6PpN5qkrpEltA8pd/urtBIJ9uOlfz0/EHxDJ4u8V6xrdxK0pu7mSUM/93eQoP+8Tn2GK/bb9p154Pgh4mktJfJf7OqluPuswDdSB0zg9jg1+A11fGMscHJ2xBehZuzZ68hR+VbQWo7aXKtoH2TLHzIjFlB7AHJOOueufYA+tacWmSX0sAjBKQjcCe5yM57k5HFUbK3mm10pDybn5CB6YHA/AjP8A9evsH4efCe6v8XEkH7kgFgR+H4E9R6flWGLxqpK3U7MFgJ13dbHgOmeCHuLVrxYiQvcjng9AOprqdN8Bz3lw6rCzPCACpA5zz07cZNfffhv4QW8WlmyMYLEYJxycD/GvQdA+DFnbE3DRLvd/MY468YAP0zmvF/tSUr2Pp6WSxVuY+QPCfwYMlqZpE+Zh19Mg4I9wCQR69qpa98Ibs3QFvalg52qccFRwTjHHUY+vtX6ZaV4JsrSCKMR42c5x39a6tfCekSRgPAkhxnJxx6AZrKNad7o6quDo25eh+Qlp8I71727tTblvs0YZiRjduJwR6kYGR/kcHf8Aws1JrsxfZGXcehGACxOM8c8A1+0//CGaFD5m21UM7bmbA5z1HOa5jUPAeiXE7TfZ0LA8HHoeOcfWqljZxehh/Z1GS5T8NPF/hO+8PymGWFghbuOuDjcD6cZ+lcNaIo2W7YKSPsHpnkkcdlPX2zX7KfFj4NaP4l0O4itoBFcFCVcDPYkD6GvyS8TeF5dFvJdHnLIbWRtnBGcEHJ+uMGvYy/G+2jyy3Pnc1y76vK62Pav2bNfbwh8XNC1Bn8uGW6WGU56JIQpJ9jnBHpn61+8bc8A8da/nP+Fi3c3i/QraXduivIkaQYJbbINpIPB9SPSv6LIlK28St1CKPTtXZUXU8lMaRjt+NHPHpSljj/P+FJXIMifcM5NRHkA1ZIzULAA1rF30Aj47ij5fSn4z0/lRtP8AkVYH/9T9DKcvrUWz3NSEYrg22Ogkx096eqc9f8/nUanjntTwQD7elbRdwPI/2gNLGr/BzxPbkbjHYtMAMdYyGB5z0x6fTnFfz06mj713Jg7+vIYcEDj8e9f0ya3pcGuaLfaPcgtFeW7wsOM4ZSDjIIz6cV/Ot4z0C50HxPqGlXsZikt7qRAjg5CqxwMkDr68Z7VcHZg02rHXfATwW/ifxbETHvjhI3ZyfQdce3vX69eHfCFtp9lFFFEAQADwByOM188/sp/Dm20nwnBrc0eJ7webk+h5wD6V7Z428Ta/HcDT/DUTIEzl8clhxg+x9/avArr283Jn1uDfsKah1PXLHS44iBhVHTgV1VtBFGNgwR/M18RzeKPjfZESpBiMYGJFycnqeuMY6V6t4M+JXiKcpa6/EI5QcFgu3PbpWPsYQ1Wp6dOvKpo0fSwhVUPGCcED/Ip0QwOSB2Fc9DrC3IDEjGM8Y+tcz4i124s4jHacysPlx/MUuaJs6btdo9DupoIUMk0iKo6sxAH15Ncjd+JPDcbGP7XCzE4+Vh3/ABr5y1Lwh4j8XXxm1PUZ2jLErGrEIo6D5RwT9Qa7LTPgtbWNusiyF5Mbndsc57Acn8STV+zpSVupyTnWjLTY9MvLVJlyhDo4wCOhr80v2pPhmLDUx4hsYyIpTlgo4DZOSfTOeK/RDQtB1HRpCizF7cgr5TcgY6MoPAPbiuK+Nnha21vwBqvmICYrdpVx/s88H86jDv2FVOJGLXtqDU9z8mfg7Y+d8UdBtpxuQ6hB8uMqfnUHI/Q+/pX9BBB2hew449BxX40/sq+FX1b4z6ddlVKaduuGU5BwoIBGOuOMjP6Zr9l2INfTVXdWPiOVrRjeOlMLcY6UrdaYwHJPUCubd6iFpjABs56+1KuSoz3x+tIVB6dRQnYCLJHHNG4+9OY849KbWqkB/9X9DR1pxGaaODTicVxLZnQNyBjvn9KeBuIqNgSQf0qRB0FKNrgTKeNvavyH/bV+HdxoPxKTxTAh+wa5ACPlwBMgwyg9CTgE555r9eACCPc4r4G/aI8W2HxKGo+BIIGEumHzYZGjVvnjBZtrfeXIA4HB6HoKK2IjTtzvc7sHgK2J5nSWiPV/hJAukfDHQGZcFrCNx6glQRmulglsIGl1HUZUgj+87uQqjHJJJOAB3zxVXwHY+b8MvDsXORpkGcnnIjGc+9eaeMvhlqHjGdf7W1GRLKJwy2q/6tiCCC6j7w65B4rwqrd7dD6qhT0v1Oz1T43fB3TbxNEvdfs5LyVNyw2wknbZgncREjAKQCc9MAnoKoSXXhjX7ePV/DN3DdWkmHEkDBlwwBByOmQQegrxn4jfs72njvXLPWk1H+znitI7aeOxRlEnlAhHAyoVgpIPUH0Hf23wz8PY9Djie3LJFbWEdj5SKERkhULGzAZLOAPvE5OSOlTXhR9neD1N8K8Sqn7yOh3fha0lvIk2OdqZHJ5/I1e8QWEkGXkXcy9xV3wbGtkr+bwq8k+mDzwK6vVrVLmV16gjrzzmuVL93c9CVR81j5M8YfFKfwPpOqatp2mSaqdIhWe6jjcRqgdlVd7kMR94EgAnHJwKxfhb+074q+IkWpjSvDtjIml2P224AuJ42UeYYxEWlhVCxAypUkEcE54Hves/DCyu/Pkjt1aO8UpOMsBIGHIcDhgR1ByDUvhH4XaF4bt5LbStDsrVJSC+xcAlc7SQDyRk4znHau6jKmoWlHU83EUq06nMp6GV4S+JVp4uVFfTbzTLs8NDcIMAjqA65U+x4+ldl4s0833h3ULPbu862kVRjrlSMGuktPC1vZHztiB+vAxjH0o1FCYTFgYYY/MYrkjzJ3ZpVjF6I/Ob9nm6svhlcXPjHWo3Ml5MbWJFjLFIyx3uWyAFzjjBJ9DX6eWF9banYwahauHhnQSIw5yDyK+TT4Y0R/AAsbIJPJaSTebxwGBYYyRnjAHNfR/gG0lsPBulWsww8dsuR6cdK9fB4ic6sk3oeTnWX0aOEp1Ir3jqycfSgHIprHIwP8/ypBkd67m9T5QNpz1puPU49qcCSOaYUGck0gGEE9BRtb0p+1h0OBRhvWq5gP/W/Q0HBoJzUKvkjP0qQuuDjr2rhs7WOgWpFOagOTjjOP1qWNh1z1oW4FgH17c1+feq+HpvD/xR1n+04yInEs4Yj7yuvBHr/wDqr9AN3vmvGfjJ4Zt9U0hNaGIpbZJIJJcHiOVSATjnAbGfQH2rjzGnzR51uj6bhrG+yrOi9plf4ey28/hHTlicvGsAUZIP3SRjjjjFdtBBEzkFQeMY/rXhPwml1LS/Ci6dqMfltbXEgiZWDCSNm3BwQTwSSMH0r2awuxIQScnOcCvNk01ue2ock5ROlTTrfIYIB6cVBqKQR2237gHU1oxyxsgORkDjrXE65fQXeoQ6U8vlpzLK3+yuOM+5IFZzso2Noxd7mzpB8uYtHjaOnvW3POY389xkHivNtP8AHXhuW/l0zTrm3uHs2EcqxSIzI3XDhSSp9QQKteLvix4F8MWtvdeJr6306B5BEhdiWkcngKoBJPfjp3qXbktc0jHS9j1O0ltpUHltvHX9PStNIVYjaOnSvKk1izWSC90OYT21yokLIcjBwQR14INekadqKywA9M4x0/KumnNNWMqtJx1Wwt8RCoIxk+nriuL1GfKuO3X8a39VuWbL4OB+FcHqN05jJYYLcAZ/SsK09bIz5dLs878O6RjVNVtY1d7S5lQbj9wyM+5gvrjnOOBX0lGqxRJEgwqKFA7DA4FcRoOmI11Fctz5KD5eynsAOg9ffFdxI2K9TLoOMHNng8R4r2lZU10EIAP40yTnAUYpN4PfrTWyvHXNdtm2fNkgJ4FNYY6niotzetTDkZoasBH846Dj6/8A16P3npT8HsaPm9aLsD//1/0FwOOMHvSjaOvNLtOOtCqM/N0Fcl4nQKXJpFcKAMflTWxk46UlPlVgLAcN2x9ajvLSDULSWxulDxTKVZT6ev1FN3Hp3NWVyAKhxTuuhUZOL5kfO0djb6DqEukqPLChgiHOSVJJP5HjtjpWtpt95MwWQ8k8V6xr1hb32nzs0StOkZKPtG4Ec4BxkA45rxAkpLuboDx7V8/iqLpO3Q+0wGOWITm1qepwXgKbd2c8/wCIrz3xLo82oyG4spzBKOAxGQQeoI7g1cg1MxpyeSO1ZtxrivL5YYAjkniuGVVvQ9uDtqjynwv8H9I0zWbnVYoIoL255kntwVdhnJJJJJ5JJzmvVLDwdpt9avHcIJDCxXc4DMO24ZBx7EVBF4s0yynLAmUgYYpjr0OM8GtO38V6bZsVhEkwlxI2cLx1AA/nW8IX6GjU7XOr8O6HpmiWzWsAdwccuckDsB0AA9MV1kKrboIlPAPA781503i3RJYXuo7tEEYywdgCPXIJrY0fXodVtxNbSrKpGQykHPoc0pz5Hc55Rb3OkvJi6cngcYrlGi+0XUUDDKM4Qj1BIBHHtWxdXDEeWep71X0tBNrFumMmImQj/dHGfxIp0ffqJHBi58lKUjvra1tbKIRWkYjTrgevqTkk0spJ74pWbpj0NRZ4+bmvpVpotj4KUm9XuRrnIyKkds4qMkZxTvvH5jk1q1Z3EOIXbkde/embzjGeO1KyFflPfmmHp9KEk1cBdxx1o3e9Q4zijYKOVAf/0P0Fdz+HpSZ4/Woic8ZpynjH4VzJHQSoRkn0oXG4elR9B+NOVgaTVwBxg8etTKT3pgB64JFSkfhUSb2ANu7jGQa8S8VWB03U3ixiNvnj44Ksen4HIr28MRXC/EGBH0ZboqN8Ugwx/utwR+gP4Vx4ykp079UeplVd063L3PLIpkdGXJzjIryXxP4L1XVL46lZard2TSEqY4mXYy+hVlIznkEYNd+sjqQyHOAf1/pU9tKdxRxuDHj1FfN83LK63PuabVk2edaN4BsPNX+0dR1EunzHMpVd3rtXAP5V3kPgXwwYZFnmurkk5USSMQfbOQAPatsaW04AXI/z61d0/Q5lm+YMQCcZ/wAK644rSzR6Cr+7Y5A/CTwvfFRNZK9uOSjlmzznByeRnt0r0TQdItNAjFtZjy4uqqMYA7Aegro4LY2yZKkkjBrMkDnc5GOfXn1rkrVXN3ZxTlzNtlue5+YkHPvXTeFbQiKbU2HMx2R5/uqeT+J/lXmN/feViGMl5D0H88/SvYPDIH/CPWWP7hOf+BHNellMVKpdnzWeVGqSitjZPXmopCMECpjg59qiZQec/UV7sGk9T5QgAI7U4MBQ2PTjNKxUjgYrV9gGMzHA7Cm0oGe9JTACPWjApd47jFG9fSgD/9H78yCcip1AyD1qmODipQ/auc6CUsM496AMHFRA5I+tPbgigCdWI4JqZTnkjj/PvVTOcU4MRxUSjfYC1znjkVyXxCkt7fwuv2hwr3twIbdT/EyKXbH0Ufma7axtpb2eK2hGXlbH+JP0HNeeftH2g0hfA0ig/Yk1Ka1Y/wDTWW2coT9SprnxEWqEpHZl9niIJnzu999llMcpwh6H0yeAfaui04xyqHXkjkkc1hajaLOrAjk8msC0ur7Sm2RktF3yegz0FfJqSejPvXBrVHumnX0MZwQOABmupttRt0OQF57nH9K+d18TqCGwQR/CSP5GryeMWAG1Cc+n+TWistmJyl2PoKS+tn4Xkjk4I/nXDeItbhhJihPznjAx16CuBTxHql4PKtYmXPGev69K1tH0G4uJxcXhLMTk5/wqG43utR8srGjpdi8wa6uQSzDv29hXu3hVbe68KxXFmSTYym1ukJHyuSXRh/sspAHuDXBGyWG2C9Bj/wDVXdfAOGPVb/xvpMnMEbWgl46SshII9wADXqZNrWcTxM9p/wCz37Gk5YZx071Dk1e1Sxn0y9lsbgENGcA/3gehHsetZ6gEc19AoW3PkSMsc0oft3oximgDqetUBJnvRkZzUbE9Kbjj6UAPLAnOKTI9Kj5NGGoA/9L74opM/LkdutMzmua+tjoJM96lGWHJqAZ/Ct7S9B1bVnC2duxUnHmNwo+pPX6DJqkmwMrke9W7S0uryURWsTSuT0UE/me3416rpXw7toAJ9Vl84jnYuVUH3PU110cNvYwmOwjSJQeqgCtY0X1J5jk/DXhqbTc3V3jziu1V/u+vPqayPix4F/4T7wNf6FEQL1Nt1YyY+7cQHfGR9SNp9iR3r1GBXNqkjHJIOfU8mmhtjhiODxz6VtKjFwcOg6dZwkpLc/LfSLptRtQZkMcqEpLEwO5HQ4ZTnoQcg1YmsFbIZeOte6fG74fHwp4q/wCEx0mLbpWtN/pSqOI7rux7ASDnP94Hua4SKzguINwGSRnivz/E0JUqjps/SsJiYV6KqRPMToUM7bpUOPWuz0nwjpqxCZgDk4x/9atGOwKuUQYB4wff0rpNP0xoyNwIHXHYfhXOb3sQ22lW6EJHGFX2H8uldVY2kcKbcYH/AOqmra7MZOB14PSrzNFDEM5ye5q0iXLsZupSx28EksrBUQFmbpxyST7Cvaf2c/Dc2k+BbvxFfIUuvFGoPqG0jDCEKIrdTnuUUN7bsdq+eW0+88d+JbDwNpxIiu38y+lXgrbIR5nPqwIUepIr9BEtobKC20+3QJFBGqKq9AFAAA/ACvpchoO7qnynEOKVlQW5xvijwn/wkMSSWzLHcw/dY/xA/wAJI6c9DzivFtR0XUtIcx6hbPGRxuI+U/Ruhr6miQoreuM5qtOI54vKuIxKj9VOCPxB4r6CVJPXqfLKbR8mZI6jp61GWHavf9Y+HOkaghl0xzaSHnC8p+Knn8iPpXlGs+DNd0cl5YPOiH/LSLJ/EjqPyxXPKk0aKSOXznmkZjt9KM4HIwRx+NI7ZA71mUIG4oyaaHxS76AP/9P7wBDdK67RPBuuawytHCYYTg+ZL8uR6gdT+WPevWPD/gnRdFUSTL9suQeXfGB/ug5A+vWuz812+VQEUdhxShh1vI1523oji9H8A6Npu2a/JupR2bG0H2UZH5k12vmRRgLAgQDjpxj2HamBAT7UCMCuhRS2DlZWud7DLHOT3qMx5hA9KmlUlfpUigAAN6Uxa9BNPzJZKMZ2lgfwJFNmiOOKuaeiLHMijIEpP/fQB/nmpJYc5wcEUEPcxNT0Kw8VaFdeH9Wj82C5Qoynt3BB7EHBB7EA18K6r4f1HwJ4jm8M6qrFSS1pP/DLFnCsD6jow7HPtX3Dq3iG20AIH+e4mP7uL6fxNjkAH8zXDeKPD0XxF0oQamwjuoH821vIkBaInqMZGVYdRnsDnIrys0wP1iF4/Ej2sozB4adp/Cz5cNmpbcpIPHTmr1utzjbkHHFdJrHhHWPDBSO/VZYmyIrmL7j+wJxhsdQefTI5rFjYr1BB7CvjpUpwlyzR9xRrQqR5oslhSUSAMeOpNc94p1yHT7Yqpy5GQB+Q/Ot1pdoLHgAHnpWl4C+HE/iDW08Z+JE2aNYv5kMTg7rl1OV2j+4pwSTwSMdMmtcNhpVp+zgYYrFQoQdSX3HsP7Pvw9m8P6O/ijWo2Gq6riRlfrFFnKRjPIJ+8w9cA9BXvSgyXDM3PJFcPoHj6zvNQOjXarA8hxC4+6zc/KR2OOh6E8Yr0CNQGz6mvvKFGNOChHY/OsTWnUqOpPdkzLiN/p/Ss2ToB6H+laM52wuR1xgCs0hj2rUxi+ogZh93jHpU4nZhhwGHfPp9aiUEnmhhgHv9aA0sc5rHhDw/rQLyxeRKf+WseFbPvxg/jmvJtc+Hes6XumssXsA5yg+YD3Xv+Ga93PIJ9O1NV2TBUke1RKmpbjUmfJLKysVKkEdQeCKTB9P1r6fvND0DUpftGo6fHLL03gYJ+uKq/wDCJ+Ev+gYn61j9XZfOj//U/aUDPSnquenWnQ8kqT2qTaYzz610FRdmRqcHaeD0NTADB75zUbqD82eaSOTA2nv0oKb6kMowaQc1YZQwzniqvIJHWgV7lnTseZOufQ49OoqvrGqR6ehVAJbhx8kYP6n0AqJRPDLK8DAeauORyOvI/Os6PS1jmaZvndzksxyc+5oEkupwUWk32pzPc6swa6Zshx09gB2AHaursYbmy+6MAfeA610H2NWAx19en9KlgGD5cgwR0Prj1oNJVLqxiXun2+p2ElhdxiSKYYwezDow9wehH06V846jo/8AZNw9rcRmOZDjB5z6EEcEHtX2AthFLGcZBHNed+KfCKa/c2C5CGCdfPbu0PJZR75Ax6ZNebj8Eqy5o7npZXmTw8nGWx5R4N8AS6xMuo6rEwsBykR4Mv17hfU9+g9a9k1i1JtPskIVVRdiogAVQBgADpwOBXYlQkQitlCooC9hgdgB6AVnvACCpzyeT610YXCwow5YHLisbUxFTmmfP11oFxBL9r+YMrfIRnIxzn617t4R8QLrViEnOLyBQsinq2OjD69/Q1LLp0M0ewgHP0rmbnw5LaTre6c5ilQ5BX19PoehFdCjYxk1JWZ6bO2Ixnuw/wAaq5yTVKyu7i6to2uk2SgHcAeD747dKl3DNUc7ROMdqiYE9+KduA7CnN05oAhI2qaRV3Up4xnvQOme1AELKAcZpMD1qY885pNtAH//1f2guGMRSVTjBwffNaq/vYww6Gs/UUCxSLjkcj8ORT9Nl3265P410Gl76k+3APtVTODV5scmqZXHPf6UAKr4PPT0pxAbv71FT1BHNA1EcVxwDmhhnqMUA+o5p24UCULPUavFOZfMXoAR0pDjHFO9qCnFdCa2uTHmKXr6+tPtYWkcs3AY9fQe1Z0xLzRR/wB9gPcDvW/FE28ckKOc59ulJ36GcuxHdlYo1CgEGs0YJPb/AD9K0L4AlMe9UQmc0xJjTjtUjFGXgZI7moyMHFLzmgpy0FUFfbNJtx1/z+tKTg07hh75oIGkA8ilznjNOfCjtUXNAEhHPXNRNnoPWl7c9aANxA96AFl+XavcDmosmrUKebuY9jip/IoA/9b9qNUbKFxyCKp6TJm36cZJ/Wn6hKWtWYZIHrVTR2/0Ye5P866C4o225GelRHBGfSnnHGTTSQV20Fxb1IcE1IucY44pp+XH+f8AGlU9+5oGrdBTyaCc8Cm5zS0DAEgUpz1NN7mnEDk9qAGxkNf2yjk/M35KR/WuiBwBjtXPWuG1KL2jf+YroKDKe5SvSQVz3ziqfzc81Yvzyh74NVVbcMH6UEpNi5zk9xSE5PtR0B9+KSgbiOIyc+tOyB1pnP5U1moFysCxY/X1p4Oe2aiXPc0+gQYqaMAAv2AqPhhjOKY8mxCtAFyzTEIbuxyatYNUBKgUAjkfWjzY/T+dAH//1/2NnuRLpxZQclc/5/KmWDGKCPsMc1lXM3kPc2XICOcd8BvmH6HFXoW/dqB3H9K6DSOh0CTKfcY+tKXBrKjLE8HA4qy0hXjH+cUD1RbJHan54x3qksucce1Wg9Aeo/7vb/P60mcZz3ppk9RTSc9sUA2Pz3qRQT16VHUucKMelA0LZgf2kf8AZiP8x/hW9XPWBzqcvp5PT6sP8K3twx/n/Cgys2UL8ZKemKoKcHHvV2/bDL9M/rWcGx0oLjoWC1LnFQ7hj/P+FSZ/z/kUF2uKDn2pCoP/ANf/APXQDjrzQX5/z/hQKSuL3/ClqPdnHrQW55oMrMdnGc1XuJASsfOSe3t1qKSZl+lUnl/0nzCOETcPwHNAiaWSWWVkiYkR8H8aZsuvU1V0y4JtROxy07Fzx6nitD7Uf8igD//Z" alt="陈乐天个人照片" width="181" height="271">
+        </figure>
+          <h2 class="profile-name">陈乐天 <span lang="en">Letian Chen</span></h2>
+          <p class="profile-subtitle" data-zh="上海交通大学 · 本科在读" data-en="Shanghai Jiao Tong University · Undergraduate">上海交通大学 · 本科在读</p>
+          <dl class="profile-facts">
+            <div><dt data-zh="年龄" data-en="Age">年龄</dt><dd data-zh="21 岁" data-en="21">21 岁</dd></div>
+            <div><dt data-zh="所在地" data-en="Based in">所在地</dt><dd data-zh="中国上海" data-en="Shanghai, China">中国上海</dd></div>
+            <div><dt data-zh="专业" data-en="Major">专业</dt><dd data-zh="英语" data-en="English">英语</dd></div>
+            <div><dt data-zh="辅修" data-en="Minor">辅修</dt><dd data-zh="行政管理" data-en="Public Administration">行政管理</dd></div>
+            <div><dt data-zh="毕业时间" data-en="Graduation">毕业时间</dt><dd data-zh="2027 年 6 月" data-en="June 2027">2027 年 6 月</dd></div>
+            <div><dt data-zh="语言" data-en="Languages">语言</dt><dd data-zh="中文 / 英语 / 法语" data-en="Chinese / English / French">中文 / 英语 / 法语</dd></div>
+          </dl>
+          <div class="profile-contact"><a href="mailto:letianchen@sjtu.edu.cn">EMAIL ↗</a><a href="tel:+8617323008358">PHONE ↗</a></div>
+          <div class="note-card"><strong>IELTS 8.0</strong><span data-zh="中英双语工作能力" data-en="Bilingual proficiency">中英双语工作能力</span></div>
+          <div class="coordinates">GPA 3.63 · SHANGHAI · 2027</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="metric-band">
+      <div class="metrics shell">
+        <div class="metric reveal"><strong>3.63</strong><span data-zh="本科 GPA" data-en="Undergraduate GPA">本科 GPA</span></div>
+        <div class="metric reveal"><strong>50+</strong><span data-zh="商业地产项目数据库" data-en="Properties researched">商业地产项目数据库</span></div>
+        <div class="metric reveal"><strong>20K+</strong><span data-zh="研发数据分析记录" data-en="R&amp;D records analyzed">研发数据分析记录</span></div>
+        <div class="metric reveal"><strong>200+</strong><span data-zh="有效研究样本" data-en="Valid research responses">有效研究样本</span></div>
+      </div>
+    </div>
+
+    <section class="section shell" id="about">
+      <div class="section-head reveal">
+        <div class="section-index">01 / About</div>
+        <h2 class="section-title" data-zh="理性分析，也保留对人的<em>感知力</em>。" data-en="Rigorous analysis, grounded in <em>human insight</em>.">理性分析，也保留对人的<em>感知力</em>。</h2>
+      </div>
+      <div class="about-grid">
+        <article class="about-lead reveal">
+          <p data-zh="我关注数字背后的行为，也在意制度、语言与文化如何影响选择。无论是研究市场、理解组织，还是设计项目，我都希望把散落的信息连接起来，形成可执行的答案。" data-en="I look for the human behavior behind the numbers and the ways institutions, language and culture shape decisions. Across market research, organizational analysis and project design, I connect scattered evidence into practical answers.">我关注数字背后的行为，也在意制度、语言与文化如何影响选择。无论是研究市场、理解组织，还是设计项目，我都希望把散落的信息连接起来，形成可执行的答案。</p>
+          <div class="signature">Analytical mind · Human-centered lens</div>
+        </article>
+        <div class="about-side">
+          <article class="info-card reveal">
+            <h3 data-zh="教育背景" data-en="Education">教育背景</h3>
+            <p><strong data-zh="上海交通大学" data-en="Shanghai Jiao Tong University">上海交通大学</strong><br><span data-zh="英语（比较文学与跨文化方向）· 行政管理辅修 · 2023—2027" data-en="B.A. English (Comparative Literature &amp; Cross-Cultural Studies) · Minor in Public Administration · 2023—2027">英语（比较文学与跨文化方向）· 行政管理辅修 · 2023—2027</span></p>
+          </article>
+          <article class="info-card reveal">
+            <h3 data-zh="关注领域" data-en="Focus areas">关注领域</h3>
+            <p data-zh="商业研究、组织与市场洞察、数据分析、跨文化传播，以及 AI 对工作流程的重塑。" data-en="Business research, organizational and market insight, data analytics, cross-cultural communication, and AI-enabled workflows.">商业研究、组织与市场洞察、数据分析、跨文化传播，以及 AI 对工作流程的重塑。</p>
+            <div class="tag-list"><span class="tag">Research</span><span class="tag">Strategy</span><span class="tag">Data</span><span class="tag">Communication</span><span class="tag">AI</span></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section shell" id="experience">
+      <div class="section-head reveal">
+        <div class="section-index">02 / Experience</div>
+        <h2 class="section-title" data-zh="从一线现场到管理决策，寻找信息的<em>杠杆点</em>。" data-en="From field evidence to decisions: finding the <em>point of leverage</em>.">从一线现场到管理决策，寻找信息的<em>杠杆点</em>。</h2>
+      </div>
+      <div class="experience-list">
+        <article class="experience-item reveal">
+          <div class="experience-time">2026.07 — 2026.09</div>
+          <div>
+            <div class="company-lockup"><span class="company-logo shell" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M5 22c1-9 5-14 11-17 6 3 10 8 11 17M8 22h16M16 6v16M10 10l4 12M22 10l-4 12M7 15l7 7M25 15l-7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span><h3 class="experience-company">Shell</h3></div>
+            <div class="experience-role">INDIRECT CHANNEL EXCELLENCE · INTERN</div>
+          </div>
+          <div class="experience-copy">
+            <p data-zh="围绕乘用车润滑油与间接销售渠道展开研究，从终端门店走访到区域销售数据分析，识别利润、库存、获客与产品组合中的关键问题。" data-en="Researched passenger-car lubricants and indirect-channel operations, connecting outlet visits with regional sales analytics to identify issues in profit, inventory, acquisition and product mix.">围绕乘用车润滑油与间接销售渠道展开研究，从终端门店走访到区域销售数据分析，识别利润、库存、获客与产品组合中的关键问题。</p>
+            <p><strong data-zh="核心贡献：" data-en="Contribution: ">核心贡献：</strong><span data-zh="构建销售效能看板；参与 AI 驱动的目标门店推荐与话术匹配机制；提出客户分层、路线规划与访后闭环建议。" data-en="Built a sales-effectiveness dashboard, supported AI-driven outlet recommendations and sales-script matching, and proposed segmentation, route-planning and follow-up improvements.">构建销售效能看板；参与 AI 驱动的目标门店推荐与话术匹配机制；提出客户分层、路线规划与访后闭环建议。</span></p>
+            <div class="micro-stats"><span>FIELD RESEARCH</span><span>SALES ANALYTICS</span><span>AI WORKFLOW</span></div>
+          </div>
+        </article>
+
+        <article class="experience-item reveal">
+          <div class="experience-time">2025.09 — 2025.12</div>
+          <div>
+            <div class="company-lockup"><span class="company-logo jll" aria-hidden="true"><svg viewBox="0 0 32 32"><ellipse cx="16" cy="16" rx="12" ry="5" fill="none" stroke="currentColor" stroke-width="1.8" transform="rotate(24 16 16)"/><ellipse cx="16" cy="16" rx="12" ry="5" fill="none" stroke="currentColor" stroke-width="1.8" transform="rotate(-24 16 16)"/><ellipse cx="16" cy="16" rx="5" ry="12" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="16" cy="16" r="2.2" fill="currentColor"/></svg></span><h3 class="experience-company">JLL</h3></div>
+            <div class="experience-role">RESEARCH INTERN</div>
+          </div>
+          <div class="experience-copy">
+            <p data-zh="搭建并维护上海办公楼与产业园区子市场数据库，分析租金、空置率、净吸纳量与企业选址偏好，将周期趋势转化为客户决策依据。" data-en="Built and maintained a Shanghai office and industrial-park database, analyzing rents, vacancy, net absorption and occupier preferences to translate market cycles into decision support.">搭建并维护上海办公楼与产业园区子市场数据库，分析租金、空置率、净吸纳量与企业选址偏好，将周期趋势转化为客户决策依据。</p>
+            <p><strong data-zh="核心贡献：" data-en="Contribution: ">核心贡献：</strong><span data-zh="参与季度市场报告与双语研究写作；用 ArcGIS 完成空间可视化；拆解 20+ 商业地产 AI 业务场景。" data-en="Contributed to quarterly reports and bilingual research, delivered spatial analysis in ArcGIS, and translated 20+ real-estate scenarios into AI model inputs.">参与季度市场报告与双语研究写作；用 ArcGIS 完成空间可视化；拆解 20+ 商业地产 AI 业务场景。</span></p>
+            <div class="micro-stats"><span>50+ PROPERTIES</span><span>ARCGIS</span><span>BILINGUAL REPORTING</span></div>
+          </div>
+        </article>
+
+        <article class="experience-item reveal">
+          <div class="experience-time">2025.06 — 2025.09</div>
+          <div>
+            <div class="company-lockup"><span class="company-logo bcg" aria-hidden="true"><svg viewBox="0 0 32 32"><g fill="currentColor"><rect x="5" y="5" width="6" height="6" rx="1"/><rect x="13" y="5" width="6" height="6" rx="1"/><rect x="21" y="5" width="6" height="6" rx="1"/><rect x="5" y="13" width="6" height="6" rx="1"/><rect x="13" y="13" width="6" height="6" rx="1"/><rect x="21" y="13" width="6" height="6" rx="1"/><rect x="5" y="21" width="6" height="6" rx="1"/><rect x="13" y="21" width="6" height="6" rx="1"/><rect x="21" y="21" width="6" height="6" rx="1"/></g></svg></span><h3 class="experience-company">BCG</h3></div>
+            <div class="experience-role">CONSULTING PTA</div>
+          </div>
+          <div class="experience-copy">
+            <p data-zh="支持医药行业战略咨询项目，统一并分析研发台账，从投入合理性、计划偏差、产品管线与组织协同等角度形成结构化判断。" data-en="Supported a pharmaceutical strategy engagement, standardizing R&amp;D records and evaluating spending, plan variance, pipeline positioning and organizational collaboration.">支持医药行业战略咨询项目，统一并分析研发台账，从投入合理性、计划偏差、产品管线与组织协同等角度形成结构化判断。</p>
+            <p><strong data-zh="核心贡献：" data-en="Contribution: ">核心贡献：</strong><span data-zh="处理 20,000+ 条研发数据和 2,000+ 份调研问卷；把结论转化为管理层可用的汇报材料与流程建议。" data-en="Analyzed 20,000+ R&amp;D records and 2,000+ survey responses, translating evidence into executive-ready presentations and process recommendations.">处理 20,000+ 条研发数据和 2,000+ 份调研问卷；把结论转化为管理层可用的汇报材料与流程建议。</span></p>
+            <div class="micro-stats"><span>20K+ RECORDS</span><span>2K+ SURVEYS</span><span>EXECUTIVE STORYTELLING</span></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section shell" id="research">
+      <div class="section-head reveal">
+        <div class="section-index">03 / Research</div>
+        <h2 class="section-title" data-zh="跨越语言、认知与社会关系的<em>研究实践</em>。" data-en="Research across language, cognition and <em>social relationships</em>.">跨越语言、认知与社会关系的<em>研究实践</em>。</h2>
+      </div>
+      <div class="project-grid">
+        <article class="project-card reveal" data-number="01">
+          <div class="project-meta"><span>Project Lead</span><span>2025</span></div>
+          <div class="project-visual" aria-hidden="true">
+            <svg viewBox="0 0 260 100"><path class="line" d="M28 50h204M56 50c18-24 38-24 57 0s38 24 57 0 34-24 54-3"/><circle class="accent-fill" cx="28" cy="50" r="8"/><circle class="blue-fill" cx="232" cy="50" r="15"/><text x="20" y="25" fill="currentColor" font-size="10" font-weight="700">ZH</text><text x="222" y="25" fill="currentColor" font-size="10" font-weight="700">UN</text><path class="line" d="M82 25v50M130 25v50M178 25v50" opacity=".25"/></svg>
+          </div>
+          <h3 data-zh="中文在联合国多语机制中的实用价值" data-en="The Economic Value of Chinese in the UN Multilingual System">中文在联合国多语机制中的实用价值</h3>
+          <p data-zh="从语言经济学视角比较六种联合国官方语言的文件处理效率与沟通成本，统筹研究设计、实证任务、数据分析与结题报告。" data-en="Compared processing efficiency and communication costs across six UN official languages, leading the research design, empirical tasks, analysis and final report.">从语言经济学视角比较六种联合国官方语言的文件处理效率与沟通成本，统筹研究设计、实证任务、数据分析与结题报告。</p>
+        </article>
+        <article class="project-card reveal" data-number="02">
+          <div class="project-meta"><span>Core Researcher</span><span>2023—2025</span></div>
+          <div class="project-visual" aria-hidden="true">
+            <svg viewBox="0 0 260 100"><path class="line" d="M22 54h18l8-22 12 48 14-62 15 69 14-49 12 16h26l8-15 12 30 12-45 14 59 13-42 12 13h26"/><circle class="accent-fill" cx="130" cy="54" r="6"/><path class="line" d="M24 84h212" opacity=".25"/></svg>
+          </div>
+          <h3 data-zh="情感韵律多模态加工的老化机制" data-en="Multimodal Processing of Emotional Prosody in Ageing">情感韵律多模态加工的老化机制</h3>
+          <p data-zh="参与六类情绪语音采集方案设计，招募并筛选 80+ 位老年被试，组织 ERP、听力与认知评估，并用 SPSS 分析实验数据。" data-en="Co-designed a six-emotion speech protocol, coordinated 80+ older participants across ERP, hearing and cognitive assessments, and analyzed results in SPSS.">参与六类情绪语音采集方案设计，招募并筛选 80+ 位老年被试，组织 ERP、听力与认知评估，并用 SPSS 分析实验数据。</p>
+        </article>
+        <article class="project-card reveal" data-number="03">
+          <div class="project-meta"><span>Core Researcher</span><span>2024—2025</span></div>
+          <div class="project-visual" aria-hidden="true">
+            <svg viewBox="0 0 260 100"><path class="blue-fill" d="M25 22h90a13 13 0 0 1 13 13v23a13 13 0 0 1-13 13H72L52 87l4-16H38a13 13 0 0 1-13-13z"/><path class="line" d="M25 22h90a13 13 0 0 1 13 13v23a13 13 0 0 1-13 13H72L52 87l4-16H38a13 13 0 0 1-13-13zM146 32h77a12 12 0 0 1 12 12v15a12 12 0 0 1-12 12h-29l14 14-29-14h-33a12 12 0 0 1-12-12V44a12 12 0 0 1 12-12z"/><circle class="accent-fill" cx="58" cy="48" r="4"/><circle class="accent-fill" cx="76" cy="48" r="4"/><circle class="accent-fill" cx="94" cy="48" r="4"/></svg>
+          </div>
+          <h3 data-zh="男性向恋爱游戏中的准社会关系" data-en="Parasocial Relationships in Male-Oriented Romance Games">男性向恋爱游戏中的准社会关系</h3>
+          <p data-zh="围绕沉浸度、互动频率与现实社交满意度设计问卷，收集 200+ 有效样本并完成 15 位核心玩家深度访谈。" data-en="Designed a survey on immersion, interaction and real-world social satisfaction, collecting 200+ valid responses and interviewing 15 core players.">围绕沉浸度、互动频率与现实社交满意度设计问卷，收集 200+ 有效样本并完成 15 位核心玩家深度访谈。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section shell" id="capabilities">
+      <div class="section-head reveal">
+        <div class="section-index">04 / Capabilities</div>
+        <h2 class="section-title" data-zh="把研究、表达与协作，组合成<em>解决问题的能力</em>。" data-en="Combining research, communication and collaboration into <em>problem-solving capability</em>.">把研究、表达与协作，组合成<em>解决问题的能力</em>。</h2>
+      </div>
+      <div class="skills-wrap">
+        <div class="capabilities">
+          <article class="capability reveal"><div class="icon">Aa</div><h3 data-zh="双语沟通与结构化表达" data-en="Bilingual communication &amp; structured storytelling">双语沟通与结构化表达</h3><p data-zh="英语 IELTS 8.0、TEM-4 优秀；可独立完成双语研究、报告与演示材料。" data-en="IELTS 8.0 and TEM-4 Excellent; independent delivery of bilingual research, reports and presentations.">英语 IELTS 8.0、TEM-4 优秀；可独立完成双语研究、报告与演示材料。</p></article>
+          <article class="capability reveal"><div class="icon">↗</div><h3 data-zh="数据与研究" data-en="Data &amp; research">数据与研究</h3><p>Excel · SPSS · ArcGIS · Survey Design · Qualitative Interviews</p></article>
+          <article class="capability reveal"><div class="icon">◎</div><h3 data-zh="项目与协作" data-en="Projects &amp; collaboration">项目与协作</h3><p data-zh="跨部门推进、利益相关方沟通、资源协调与活动落地。" data-en="Cross-functional delivery, stakeholder communication, resource coordination and event execution.">跨部门推进、利益相关方沟通、资源协调与活动落地。</p></article>
+          <article class="capability reveal"><div class="icon">✦</div><h3 data-zh="数字工具" data-en="Digital tools">数字工具</h3><p>PowerPoint · Word · Data Visualization · AI-assisted Workflows</p></article>
+        </div>
+        <aside class="award-panel reveal">
+          <h3 data-zh="荣誉与校园领导力" data-en="Honors &amp; campus leadership">荣誉与校园领导力</h3>
+          <ul class="award-list">
+            <li><span class="award-year">2025</span><span class="award-name" data-zh="上海交通大学本科生优秀奖学金" data-en="SJTU Undergraduate Excellence Scholarship">上海交通大学本科生优秀奖学金</span></li>
+            <li><span class="award-year">2025</span><span class="award-name" data-zh="上海交通大学年度人物 · 团队提名" data-en="Team Nominee, SJTU Person of the Year">上海交通大学年度人物 · 团队提名</span></li>
+            <li><span class="award-year">NAT.</span><span class="award-name" data-zh="外研社杯英语素养大赛 · 全国二等奖" data-en="FLTRP English Proficiency Competition · National Second Prize">外研社杯英语素养大赛 · 全国二等奖</span></li>
+            <li><span class="award-year">TOP 10%</span><span class="award-name">Fudan–LSE Global Public Policy Summer School</span></li>
+            <li><span class="award-year">LEAD</span><span class="award-name" data-zh="上海交通大学学生联合会联络部组长" data-en="Team Lead, Outreach Department, SJTU Student Union">上海交通大学学生联合会联络部组长</span></li>
+            <li><span class="award-year">MUN</span><span class="award-name" data-zh="上海交通大学模拟联合国协会学术委员" data-en="Academic Committee Member, SJTU Model United Nations">上海交通大学模拟联合国协会学术委员</span></li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+
+    <section class="contact shell reveal" id="contact">
+      <p class="eyebrow" data-zh="保持联系" data-en="Let's connect">保持联系</p>
+      <h2 data-zh="对研究、策略或新想法感兴趣？欢迎来聊聊。" data-en="Interested in research, strategy or a new idea? Let's talk.">对研究、策略或新想法感兴趣？欢迎来聊聊。</h2>
+      <div class="contact-links">
+        <a class="button primary" href="mailto:letianchen@sjtu.edu.cn">letianchen@sjtu.edu.cn</a>
+        <a class="button" href="tel:+8617323008358">+86 173 2300 8358</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner shell"><span>© <span id="year"></span> Letian Chen</span><span data-zh="在上海学习、研究与创造" data-en="Learning, researching and creating in Shanghai">在上海学习、研究与创造</span></div>
+  </footer>
+
+  <script>
+    const header = document.querySelector('.site-header');
+    const progress = document.querySelector('.progress');
+    const menuToggle = document.querySelector('#menuToggle');
+    const navLinks = document.querySelector('#navLinks');
+    const langToggle = document.querySelector('#langToggle');
+    const sections = [...document.querySelectorAll('main section[id]')];
+    const links = [...document.querySelectorAll('.nav-links a')];
+    const revealItems = document.querySelectorAll('.reveal');
+    let language = 'zh';
+
+    document.querySelector('#year').textContent = new Date().getFullYear();
+
+    const onScroll = () => {
+      const max = document.documentElement.scrollHeight - innerHeight;
+      progress.style.width = `${max > 0 ? (scrollY / max) * 100 : 0}%`;
+      header.classList.toggle('scrolled', scrollY > 10);
+      const marker = scrollY + 180;
+      let current = '';
+      sections.forEach(section => { if (marker >= section.offsetTop) current = section.id; });
+      links.forEach(link => link.classList.toggle('active', link.getAttribute('href') === `#${current}`));
+    };
+
+    menuToggle.addEventListener('click', () => {
+      const open = navLinks.classList.toggle('open');
+      menuToggle.setAttribute('aria-expanded', String(open));
+    });
+    links.forEach(link => link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+    }));
+
+    langToggle.addEventListener('click', () => {
+      language = language === 'zh' ? 'en' : 'zh';
+      document.documentElement.lang = language === 'zh' ? 'zh-CN' : 'en';
+      document.querySelectorAll('[data-zh][data-en]').forEach(node => {
+        const value = node.dataset[language];
+        if (value.includes('<em>')) node.innerHTML = value;
+        else node.textContent = value;
+      });
+      langToggle.textContent = language === 'zh' ? 'EN' : '中文';
+      langToggle.setAttribute('aria-label', language === 'zh' ? 'Switch to English' : '切换到中文');
+    });
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: .12 });
+    revealItems.forEach(item => observer.observe(item));
+    addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  </script>
+</body>
+</html>
